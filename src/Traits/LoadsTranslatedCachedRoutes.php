@@ -40,7 +40,7 @@ trait LoadsTranslatedCachedRoutes
             $path = $this->getDefaultCachedRoutePath();
         }
 
-        $this->app->booted(function () use ($locale) {
+        $this->app->booted(function () use ($path) {
             require $path;
         });
     }
