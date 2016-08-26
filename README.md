@@ -2,7 +2,10 @@
 
 [![Software License][ico-license]](LICENSE.md)
 
-A quick (hacky) fix to allow caching routes per locale for mcamara's laravel localization. 
+A cobbled together fix to allow caching routes per locale for [mcamara's laravel localization](https://github.com/mcamara/laravel-localization). 
+
+See the [github issue related to this fix](https://github.com/mcamara/laravel-localization/issues/201) in the original package.
+
 
 ## Install
 
@@ -19,7 +22,7 @@ In your `config/app.php` config, add the service provider *after* mcamara's:
     Czim\LaravelLocalizationRouteCache\LaravelLocalizationServiceProvider::class,
 ```
 
-In your `App\Providers\RouteServiceProvider`, use the `Czim\LaravelLocalizationRouteCache\Traits\LoadsTranslatedRoutes` trait:
+In your App's `RouteServiceProvider`, use the `LoadsTranslatedCachedRoutes` trait:
 
 ``` php
 class RouteServiceProvider extends ServiceProvider
