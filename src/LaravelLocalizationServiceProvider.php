@@ -33,10 +33,12 @@ class LaravelLocalizationServiceProvider extends ServiceProvider
     {
         $this->app->singleton('laravellocalizationroutecache.cache', Commands\RouteTranslationsCacheCommand::class);
         $this->app->singleton('laravellocalizationroutecache.clear', Commands\RouteTranslationsClearCommand::class);
+        $this->app->singleton('laravellocalizationroutecache.list', Commands\RouteTranslationsListCommand::class);
 
         $this->commands([
             'laravellocalizationroutecache.cache',
             'laravellocalizationroutecache.clear',
+            'laravellocalizationroutecache.list',
         ]);
     }
 
