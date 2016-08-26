@@ -1,11 +1,13 @@
 <?php
 namespace Czim\LaravelLocalizationRouteCache\Commands;
 
+use Czim\LaravelLocalizationRouteCache\Traits\TranslatedRouteCommandContext;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 
 class RouteTranslationsClearCommand extends Command
 {
+    use TranslatedRouteCommandContext;
 
     /**
      * The console command name.
@@ -47,7 +49,7 @@ class RouteTranslationsClearCommand extends Command
      */
     public function fire()
     {
-        foreach ($this->getActiveLocales() as $locale) {
+        foreach ($this->getSupportedLocales() as $locale) {
 
             $path = $this->makeLocaleRoutesPath($locale);
 
@@ -63,33 +65,6 @@ class RouteTranslationsClearCommand extends Command
         }
 
         $this->info('Route caches for locales cleared!');
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getActiveLocales()
-    {
-        return $this->getLaravelLocalization()->getSupportedLanguagesKeys();
-    }
-
-    /**
-     * @param string $locale
-     * @return string
-     */
-    protected function makeLocaleRoutesPath($locale)
-    {
-        $path = $this->laravel->getCachedRoutesPath();
-
-        return substr($path, 0, -4) . '_' . $locale . '.php';
-    }
-
-    /**
-     * @return \Mcamara\LaravelLocalization\LaravelLocalization
-     */
-    protected function getLaravelLocalization()
-    {
-        return $this->laravel->make('laravellocalization');
     }
 
 }

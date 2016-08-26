@@ -1,6 +1,7 @@
 <?php
 namespace Czim\LaravelLocalizationRouteCache\Commands;
 
+use Czim\LaravelLocalizationRouteCache\Traits\TranslatedRouteCommandContext;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Filesystem\Filesystem;
@@ -8,6 +9,7 @@ use Illuminate\Routing\RouteCollection;
 
 class RouteTranslationsCacheCommand extends Command
 {
+    use TranslatedRouteCommandContext;
 
     /**
      * @var string
@@ -57,7 +59,7 @@ class RouteTranslationsCacheCommand extends Command
     {
         $defaultLocale = $this->getLaravelLocalization()->getDefaultLocale();
 
-        foreach ($this->getActiveLocales() as $locale) {
+        foreach ($this->getSupportedLocales() as $locale) {
 
             $routes = $this->getFreshApplicationRoutes($locale);
 
@@ -85,25 +87,6 @@ class RouteTranslationsCacheCommand extends Command
     }
 
     /**
-     * @return string[]
-     */
-    protected function getActiveLocales()
-    {
-        return $this->getLaravelLocalization()->getSupportedLanguagesKeys();
-    }
-
-    /**
-     * @param string $locale
-     * @return string
-     */
-    protected function makeLocaleRoutesPath($locale)
-    {
-        $path = $this->laravel->getCachedRoutesPath();
-
-        return substr($path, 0, -4) . '_' . $locale . '.php';
-    }
-
-    /**
      * Boot a fresh copy of the application and get the routes.
      *
      * @param string $locale
@@ -111,7 +94,7 @@ class RouteTranslationsCacheCommand extends Command
      */
     protected function getFreshApplicationRoutes($locale)
     {
-        $app = require $this->laravel->bootstrapPath() . '/app.php';
+        $app = require $this->getBootstrapPath() . '/app.php';
 
         putenv("ROUTING_LOCALE={$locale}");
 
@@ -135,14 +118,6 @@ class RouteTranslationsCacheCommand extends Command
         );
 
         return str_replace('{{routes}}', base64_encode(serialize($routes)), $stub);
-    }
-
-    /**
-     * @return \Mcamara\LaravelLocalization\LaravelLocalization
-     */
-    protected function getLaravelLocalization()
-    {
-        return $this->laravel->make('laravellocalization');
     }
 
 }
