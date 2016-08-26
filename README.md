@@ -6,6 +6,7 @@ A cobbled together fix to allow caching routes per locale for [mcamara's laravel
 
 See the [github issue related to this fix](https://github.com/mcamara/laravel-localization/issues/201) in the original package.
 
+This has been tested with laravel `5.1` and `5.2`.
 
 ## Install
 
@@ -29,6 +30,34 @@ class RouteServiceProvider extends ServiceProvider
 {
     use \Czim\LaravelLocalizationRouteCache\Traits\LoadsTranslatedCachedRoutes;
 ```
+
+## Usage
+
+To cache your routes, use 
+
+``` bash
+    php artisan route:trans:cache
+```
+
+instead of the normal `route:cache` command.
+
+To list the routes for a given locale, use 
+
+``` bash
+    php artisan route:trans:list {locale}
+    
+    # for instance:
+    php artisan route:trans:list en
+```
+
+To clear cached routes for all locales, use
+
+``` bash
+    php artisan route:trans:clear
+```
+
+Note that using `route:clear` will also effectively unset the cache (at the minor cost of leaving some clutter in your bootstrap/cache directory).  
+
 
 ## Credits
 
