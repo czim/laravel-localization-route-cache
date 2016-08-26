@@ -49,12 +49,18 @@ class RouteTranslationsClearCommand extends Command
     {
         foreach ($this->getActiveLocales() as $locale) {
 
-            $this->files->delete(
-                $this->makeLocaleRoutesPath($locale)
-            );
+            $path = $this->makeLocaleRoutesPath($locale);
+
+            if ($this->files->exists($path)) {
+                $this->files->delete($path);
+            }
         }
 
-        $this->files->delete($this->laravel->getCachedRoutesPath());
+        $path = $this->laravel->getCachedRoutesPath();
+
+        if ($this->files->exists($path)) {
+            $this->files->delete($path);
+        }
 
         $this->info('Route caches for locales cleared!');
     }

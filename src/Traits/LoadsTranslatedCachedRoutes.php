@@ -1,6 +1,8 @@
 <?php
 namespace Czim\LaravelLocalizationRouteCache\Traits;
 
+use Log;
+
 /**
  * LoadsTranslatedCachedRoutes
  *
@@ -24,8 +26,22 @@ trait LoadsTranslatedCachedRoutes
 
         $locale = $localization->getCurrentLocale();
 
+        // First, try to load the routes specifically cached for this locale
+        // if they do not exist, write a warning to the log and load the default
+        // routes instead. Note that this is guaranteed to exist, becaused the
+        // 'cached routes' check in the Application checks its existence.
+
+        $path = $this->makeLocaleRoutesPath($locale);
+
+        if ( ! file_exists($path)) {
+
+            Log::warning("Routes cached, but no cached routes found for locale '{$locale}'!");
+
+            $path = $this->getDefaultCachedRoutePath();
+        }
+
         $this->app->booted(function () use ($locale) {
-            require $this->makeLocaleRoutesPath($locale);
+            require $path;
         });
     }
 
@@ -37,9 +53,19 @@ trait LoadsTranslatedCachedRoutes
      */
     protected function makeLocaleRoutesPath($locale)
     {
-        $path = $this->app->getCachedRoutesPath();
+        $path = $this->getDefaultCachedRoutePath();
 
         return substr($path, 0, -4) . '_' . $locale . '.php';
+    }
+
+    /**
+     * Returns the path to the standard cached routes file.
+     *
+     * @return string
+     */
+    protected function getDefaultCachedRoutePath()
+    {
+        return $this->app->getCachedRoutesPath();
     }
 
     /**
