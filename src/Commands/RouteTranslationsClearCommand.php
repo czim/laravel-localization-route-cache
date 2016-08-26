@@ -79,7 +79,7 @@ class RouteTranslationsClearCommand extends Command
     }
 
     /**
-     * @return \Mcamara\LaravelLocalization
+     * @return \Mcamara\LaravelLocalization\LaravelLocalization
      */
     protected function getLaravelLocalization()
     {

@@ -30,6 +30,8 @@ trait LoadsTranslatedCachedRoutes
     }
 
     /**
+     * Returns the path to the cached routes file for a given locale.
+     *
      * @param string $locale
      * @return string
      */
@@ -41,7 +43,7 @@ trait LoadsTranslatedCachedRoutes
     }
 
     /**
-     * @return \Mcamara\LarvelLocalization\LaravelLocalization
+     * @return \Mcamara\LaravelLocalization\LaravelLocalization
      */
     protected function getLaravelLocalization()
     {

@@ -138,7 +138,7 @@ class RouteTranslationsCacheCommand extends Command
     }
 
     /**
-     * @return \Mcamara\LaravelLocalization
+     * @return \Mcamara\LaravelLocalization\LaravelLocalization
      */
     protected function getLaravelLocalization()
     {
