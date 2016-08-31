@@ -1,11 +1,11 @@
 <?php
 namespace Czim\LaravelLocalizationRouteCache\Commands;
 
+use Czim\LaravelLocalizationRouteCache\LaravelLocalization;
 use Czim\LaravelLocalizationRouteCache\Traits\TranslatedRouteCommandContext;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Console\RouteListCommand;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 
 class RouteTranslationsListCommand extends RouteListCommand
 {
@@ -54,11 +54,13 @@ class RouteTranslationsListCommand extends RouteListCommand
     {
         $app = require $this->getBootstrapPath() . '/app.php';
 
-        putenv("ROUTING_LOCALE={$locale}");
+        $key = LaravelLocalization::ENV_ROUTE_KEY;
+
+        putenv("{$key}={$locale}");
 
         $app->make(Kernel::class)->bootstrap();
 
-        putenv('ROUTING_LOCALE=');
+        putenv("{$key}=");
 
         return $app['router']->getRoutes();
     }

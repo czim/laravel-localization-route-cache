@@ -6,6 +6,11 @@ use Mcamara\LaravelLocalization\LaravelLocalization as McamaraLaravelLocalizatio
 
 class LaravelLocalization extends McamaraLaravelLocalization
 {
+    /**
+     * The env key that the forced locale for routing is stored in.
+     */
+    const ENV_ROUTE_KEY = 'ROUTING_LOCALE';
+
 
     /**
      * {@inheritdoc}
@@ -67,7 +72,7 @@ class LaravelLocalization extends McamaraLaravelLocalization
      */
     protected function getForcedLocale()
     {
-        return env('ROUTING_LOCALE');
+        return env(static::ENV_ROUTE_KEY);
     }
 
 }
