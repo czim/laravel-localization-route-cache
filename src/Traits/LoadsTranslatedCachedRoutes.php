@@ -26,14 +26,16 @@ trait LoadsTranslatedCachedRoutes
 
         $locale = $localization->getCurrentLocale();
 
+        $localeKeys = $localization->getSupportedLanguagesKeys();
+
         // First, try to load the routes specifically cached for this locale
         // if they do not exist, write a warning to the log and load the default
         // routes instead. Note that this is guaranteed to exist, becaused the
         // 'cached routes' check in the Application checks its existence.
 
-        $path = $this->makeLocaleRoutesPath($locale);
+        $path = $this->makeLocaleRoutesPath($locale, $localeKeys);
 
-        if ( ! file_exists($path)) {
+        if ( ! file_exists($path) ) {
 
             Log::warning("Routes cached, but no cached routes found for locale '{$locale}'!");
 
@@ -49,11 +51,16 @@ trait LoadsTranslatedCachedRoutes
      * Returns the path to the cached routes file for a given locale.
      *
      * @param string $locale
+     * @param array $localeKeys
      * @return string
      */
-    protected function makeLocaleRoutesPath($locale)
+    protected function makeLocaleRoutesPath($locale, $localeKeys)
     {
         $path = $this->getDefaultCachedRoutePath();
+
+        if ( ! in_array( $this->getFirstWordOfRequestUrl(), $localeKeys ) ) {
+            return $path;
+        }
 
         return substr($path, 0, -4) . '_' . $locale . '.php';
     }
@@ -74,6 +81,19 @@ trait LoadsTranslatedCachedRoutes
     protected function getLaravelLocalization()
     {
         return app('laravellocalization');
+    }
+
+    /**
+     * Get current url path first word
+     * \Illuminate\Http\Request
+     *
+     * @return string
+     */
+    protected function getFirstWordOfRequestUrl()
+    {
+        $uri = app('request')->path();
+
+        return substr($uri, 0, 2);
     }
 
 }

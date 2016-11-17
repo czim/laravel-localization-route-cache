@@ -60,7 +60,13 @@ class RouteTranslationsCacheCommand extends Command
     {
         $defaultLocale = $this->getLaravelLocalization()->getDefaultLocale();
 
-        foreach ($this->getSupportedLocales() as $locale) {
+        // Store the default routes cache,
+        // this way the Application will detect that routes are cached.
+        $allLocale = $this->getSupportedLocales();
+
+        array_push($allLocale, '');
+
+        foreach ($allLocale as $locale) {
 
             $routes = $this->getFreshApplicationRoutes($locale);
 
@@ -76,14 +82,6 @@ class RouteTranslationsCacheCommand extends Command
             $this->files->put(
                 $this->makeLocaleRoutesPath($locale), $this->buildRouteCacheFile($routes)
             );
-
-            // Store the default locale in the default routes cache,
-            // this way the Application will detect that routes are cached.
-            if ($locale === $defaultLocale) {
-                $this->files->put(
-                    app()->getCachedRoutesPath(), $this->buildRouteCacheFile($routes)
-                );
-            }
         }
     }
 
@@ -93,17 +91,25 @@ class RouteTranslationsCacheCommand extends Command
      * @param string $locale
      * @return \Illuminate\Routing\RouteCollection
      */
-    protected function getFreshApplicationRoutes($locale)
+    protected function getFreshApplicationRoutes($locale = '')
     {
         $app = require $this->getBootstrapPath() . '/app.php';
 
-        $key = LaravelLocalization::ENV_ROUTE_KEY;
+        if ( $locale ) {
 
-        putenv("{$key}={$locale}");
+            $key = LaravelLocalization::ENV_ROUTE_KEY;
 
-        $app->make(Kernel::class)->bootstrap();
+            putenv("{$key}={$locale}");
 
-        putenv("{$key}=");
+            $app->make(Kernel::class)->bootstrap();
+
+            putenv("{$key}=");
+
+        } else {
+
+            $app->make(Kernel::class)->bootstrap();
+
+        }
 
         return $app['router']->getRoutes();
     }

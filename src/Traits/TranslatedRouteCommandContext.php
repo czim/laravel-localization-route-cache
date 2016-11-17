@@ -47,11 +47,14 @@ trait TranslatedRouteCommandContext
      * @param string $locale
      * @return string
      */
-    protected function makeLocaleRoutesPath($locale)
+    protected function makeLocaleRoutesPath($locale = '')
     {
         $path = $this->laravel->getCachedRoutesPath();
 
+        if ( ! $locale ) {
+            return $path;
+        }
+
         return substr($path, 0, -4) . '_' . $locale . '.php';
     }
-
 }
