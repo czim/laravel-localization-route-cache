@@ -26,12 +26,14 @@ trait LoadsTranslatedCachedRoutes
 
         $locale = $localization->getCurrentLocale();
 
+        $localeKeys = $localization->getSupportedLanguagesKeys();
+
         // First, try to load the routes specifically cached for this locale
         // if they do not exist, write a warning to the log and load the default
         // routes instead. Note that this is guaranteed to exist, becaused the
         // 'cached routes' check in the Application checks its existence.
 
-        $path = $this->makeLocaleRoutesPath($locale);
+        $path = $this->makeLocaleRoutesPath($locale, $localeKeys);
 
         if ( ! file_exists($path)) {
 
@@ -48,12 +50,17 @@ trait LoadsTranslatedCachedRoutes
     /**
      * Returns the path to the cached routes file for a given locale.
      *
-     * @param string $locale
+     * @param string   $locale
+     * @param string[] $localeKeys
      * @return string
      */
-    protected function makeLocaleRoutesPath($locale)
+    protected function makeLocaleRoutesPath($locale, $localeKeys)
     {
         $path = $this->getDefaultCachedRoutePath();
+
+        if ( ! in_array(request()->segment(1), $localeKeys)) {
+            return $path;
+        }
 
         return substr($path, 0, -4) . '_' . $locale . '.php';
     }
