@@ -54,19 +54,17 @@ class RouteTranslationsCacheCommand extends Command
     }
 
     /**
-     *
+     * Cache the routes separately for each locale.
      */
     protected function cacheRoutesPerLocale()
     {
-        $defaultLocale = $this->getLaravelLocalization()->getDefaultLocale();
-
         // Store the default routes cache,
         // this way the Application will detect that routes are cached.
-        $allLocale = $this->getSupportedLocales();
+        $allLocales = $this->getSupportedLocales();
 
-        array_push($allLocale, '');
+        array_push($allLocales, null);
 
-        foreach ($allLocale as $locale) {
+        foreach ($allLocales as $locale) {
 
             $routes = $this->getFreshApplicationRoutes($locale);
 
@@ -88,14 +86,14 @@ class RouteTranslationsCacheCommand extends Command
     /**
      * Boot a fresh copy of the application and get the routes.
      *
-     * @param string $locale
+     * @param string|null $locale
      * @return \Illuminate\Routing\RouteCollection
      */
-    protected function getFreshApplicationRoutes($locale = '')
+    protected function getFreshApplicationRoutes($locale = null)
     {
         $app = require $this->getBootstrapPath() . '/app.php';
 
-        if ( $locale ) {
+        if (null !== $locale) {
 
             $key = LaravelLocalization::ENV_ROUTE_KEY;
 
@@ -108,7 +106,6 @@ class RouteTranslationsCacheCommand extends Command
         } else {
 
             $app->make(Kernel::class)->bootstrap();
-
         }
 
         return $app['router']->getRoutes();
