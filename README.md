@@ -8,6 +8,15 @@ See the [github issue related to this fix](https://github.com/mcamara/laravel-lo
 
 This has been tested with laravel `5.1`, `5.2` and `5.3`.
 
+
+## Version Compatibility
+
+ Laravel      | Package 
+:-------------|:--------
+ 5.1.x        | 0.8.x
+ 5.2.x and up | 0.9.x
+
+
 ## Install
 
 Via Composer
