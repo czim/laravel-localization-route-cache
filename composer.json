@@ -19,7 +19,7 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "mcamara/laravel-localization": "^1.1"
+        "mcamara/laravel-localization": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit" : "4.*",
