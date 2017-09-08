@@ -44,7 +44,7 @@ class RouteTranslationsCacheCommand extends Command
     /**
      * Execute the console command.
      */
-    public function fire()
+    public function handle()
     {
         $this->call('route:trans:clear');
 
