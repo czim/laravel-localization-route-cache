@@ -25,7 +25,7 @@ class RouteTranslationsListCommand extends RouteListCommand
     /**
      * Execute the console command.
      */
-    public function fire()
+    public function handle()
     {
         if (count($this->routes) == 0) {
             $this->error("Your application doesn't have any routes.");
