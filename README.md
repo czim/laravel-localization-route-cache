@@ -6,7 +6,7 @@ A cobbled together fix to allow caching routes per locale for [mcamara's laravel
 
 See the [github issue related to this fix](https://github.com/mcamara/laravel-localization/issues/201) in the original package.
 
-This has been tested with laravel `5.1` through `5.4`.
+This has been tested with laravel `5.1` through `5.5`.
 
 
 ## Version Compatibility
