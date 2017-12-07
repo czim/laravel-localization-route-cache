@@ -52,7 +52,7 @@ class LaravelLocalization extends McamaraLaravelLocalization
 
         $this->app->setLocale($this->currentLocale);
 
-        if (preg_match('#^5\.2\.#', Application::VERSION)) {
+        if (preg_match('#^5\.[2-9]\.#', Application::VERSION)) {
             // Regional locale such as de_DE, so formatLocalized works in Carbon
             $regional = $this->getCurrentLocaleRegional();
 
