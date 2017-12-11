@@ -1,5 +1,5 @@
 {
-    "name": "czim/laravel-localization-route-cache",
+    "name": "xaoc/laravel-localization-route-cache",
     "description": "Translated route caching solution for laravel localization",
     "keywords": [
         "localization",
