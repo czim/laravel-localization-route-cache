@@ -68,6 +68,18 @@ To clear cached routes for all locales, use
 Note that using `route:clear` will also effectively unset the cache (at the minor cost of leaving some clutter in your bootstrap/cache directory).  
 
 
+## Use Mcamara's language selector
+If you would use Mcamara's language selector, yours routes must have an alias are equal as the translation key in resources/lang/{locale}/routes.php.
+
+```
+Route::get(LaravelLocalization::transRoute('routes.**auth/login**'), [
+      'uses' => 'Auth\AuthController@login', 
+      'as'   => '**auth/login**'
+]);
+==> **auth/login**
+```
+
+
 ## Credits
 
 - [Coen Zimmerman][link-author]
