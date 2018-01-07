@@ -52,7 +52,7 @@ class LaravelLocalization extends McamaraLaravelLocalization
 
         $this->app->setLocale($this->currentLocale);
 
-        // The region/locale setlocale calls were no t present in Mcamara's versions
+        // The region/locale setlocale calls were not present in Mcamara's versions
         // for Laravel 5.0 and 5.1, so we'll skip it for those versions here as well.
         if ( ! preg_match('#^5\.[01]\.#', Application::VERSION)) {
             // Regional locale such as de_DE, so formatLocalized works in Carbon
@@ -65,6 +65,30 @@ class LaravelLocalization extends McamaraLaravelLocalization
         }
 
         return $locale;
+    }
+
+    /**
+    * @param RouteCollection $routes
+    */
+    public function setTranslatedRoutes(RouteCollection $routes)
+    {
+        if (empty($this->translatedRoutes)) {
+            foreach ($routes->getRoutes() as $route) {
+                if ($route->getName() !== null && is_string($route->getName())) {
+                    $this->addTranslatedRoute('routes.' . $route->getName());
+                }
+            }
+        }
+    }
+
+    /**
+    * @param string $routeName
+    */
+    protected function addTranslatedRoute($routeName)
+    {
+        if ( ! in_array($routeName, $this->translatedRoutes)) {
+            $this->translatedRoutes[] = $routeName;
+        }
     }
 
     /**
