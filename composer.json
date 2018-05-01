@@ -40,5 +40,12 @@
         "test": "phpunit"
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Czim\\LaravelLocalizationRouteCache\\LaravelLocalizationServiceProvider"
+            ]
+        }
+    }
 }

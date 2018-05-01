@@ -25,7 +25,7 @@ Via Composer
 $ composer require czim/laravel-localization-route-cache
 ```
 
-In your `config/app.php` config, add the service provider *after* mcamara's:
+If you don't use auto-discovery, add the service provider *after* mcamara's in your `config/app.php`:
 
 ``` php
     Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
