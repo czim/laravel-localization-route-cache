@@ -68,8 +68,8 @@ class LaravelLocalization extends McamaraLaravelLocalization
     }
 
     /**
-    * @param RouteCollection $routes
-    */
+     * @param RouteCollection $routes
+     */
     public function setTranslatedRoutes(RouteCollection $routes)
     {
         if (empty($this->translatedRoutes)) {
@@ -82,8 +82,8 @@ class LaravelLocalization extends McamaraLaravelLocalization
     }
 
     /**
-    * @param string $routeName
-    */
+     * @param string $routeName
+     */
     protected function addTranslatedRoute($routeName)
     {
         if ( ! in_array($routeName, $this->translatedRoutes)) {
