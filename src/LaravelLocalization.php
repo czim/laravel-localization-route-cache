@@ -74,7 +74,7 @@ class LaravelLocalization extends McamaraLaravelLocalization
     {
         if (empty($this->translatedRoutes)) {
             foreach ($routes->getRoutes() as $route) {
-                if ($route->getName() !== null && is_string($route->getName())) {
+                if (is_string($route->getName())) {
                     $this->addTranslatedRoute('routes.' . $route->getName());
                 }
             }
