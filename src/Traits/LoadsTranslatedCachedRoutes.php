@@ -30,7 +30,7 @@ trait LoadsTranslatedCachedRoutes
 
         // First, try to load the routes specifically cached for this locale
         // if they do not exist, write a warning to the log and load the default
-        // routes instead. Note that this is guaranteed to exist, becaused the
+        // routes instead. Note that this is guaranteed to exist, because the
         // 'cached routes' check in the Application checks its existence.
 
         $path = $this->makeLocaleRoutesPath($locale, $localeKeys);
