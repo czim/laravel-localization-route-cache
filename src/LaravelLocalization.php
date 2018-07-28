@@ -68,6 +68,30 @@ class LaravelLocalization extends McamaraLaravelLocalization
     }
 
     /**
+     * @param RouteCollection $routes
+     */
+    public function setTranslatedRoutes(RouteCollection $routes)
+    {
+        if (empty($this->translatedRoutes)) {
+            foreach ($routes->getRoutes() as $route) {
+                if (is_string($route->getName())) {
+                    $this->addTranslatedRoute('routes.' . $route->getName());
+                }
+            }
+        }
+    }
+
+    /**
+     * @param string $routeName
+     */
+    protected function addTranslatedRoute($routeName)
+    {
+        if ( ! in_array($routeName, $this->translatedRoutes)) {
+            $this->translatedRoutes[] = $routeName;
+        }
+    }
+
+    /**
      * Returns the forced environment set route locale.
      *
      * @return string|null

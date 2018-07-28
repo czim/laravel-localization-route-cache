@@ -44,6 +44,10 @@ trait LoadsTranslatedCachedRoutes
 
         $this->app->booted(function () use ($path) {
             require $path;
+
+            $localization->setTranslatedRoutes(app('router')->getRoutes());
+            $routeName = $localization->getRouteNameFromAPath(request()->getUri());
+            $localization->setRouteName($routeName);
         });
     }
 
