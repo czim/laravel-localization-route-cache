@@ -120,10 +120,26 @@ class RouteTranslationsCacheCommand extends Command
     protected function buildRouteCacheFile(RouteCollection $routes)
     {
         $stub = $this->files->get(
-            base_path('vendor/laravel/framework/src/Illuminate/Foundation/Console/stubs/routes.stub')
+            realpath(
+                __DIR__
+                . DIRECTORY_SEPARATOR . '..'
+                . DIRECTORY_SEPARATOR . '..'
+                . DIRECTORY_SEPARATOR . 'stubs'
+                . DIRECTORY_SEPARATOR . 'routes.stub'
+            )
         );
 
-        return str_replace('{{routes}}', base64_encode(serialize($routes)), $stub);
+        return str_replace(
+            [
+                '{{routes}}',
+                '{{translatedRoutes}}',
+            ],
+            [
+                base64_encode(serialize($routes)),
+                $this->getLaravelLocalization()->getSerializedTranslatedRoutes(),
+            ],
+            $stub
+        );
     }
 
 }
