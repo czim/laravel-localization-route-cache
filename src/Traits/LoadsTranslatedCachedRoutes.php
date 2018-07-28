@@ -58,7 +58,8 @@ trait LoadsTranslatedCachedRoutes
     {
         $path = $this->getDefaultCachedRoutePath();
 
-        if ( ! in_array(request()->segment(1), $localeKeys)) {
+        $localeSegment = request()->segment(1);
+        if ($localeSegment && ! in_array($localeSegment, $localeKeys)) {
             return $path;
         }
 
