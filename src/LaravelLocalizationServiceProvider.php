@@ -11,6 +11,12 @@ class LaravelLocalizationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Overwrite binding for laravellocalization to make translation-based cache possible.
+        // This is not done in register() to avoid problems with the order in which service
+        // providers are processed.
+        $this->app->singleton('laravellocalization', function () {
+            return new LaravelLocalization();
+        });
     }
 
     /**
@@ -18,11 +24,6 @@ class LaravelLocalizationServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Overwrite binding for laravellocalization to make translation-based cache possible
-        $this->app->singleton('laravellocalization', function () {
-            return new LaravelLocalization();
-        });
-
         $this->registerCommands();
     }
 
