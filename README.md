@@ -17,6 +17,10 @@ This has been tested with laravel `5.1` through `5.6`.
  5.2.x and up | 0.9.x
 
 
+## Change log
+
+[View the change log](CHANGELOG.md).
+
 ## Install
 
 Via Composer
