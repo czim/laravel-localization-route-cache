@@ -2,6 +2,11 @@
 
 [![Software License][ico-license]](LICENSE.md)
 
+**Important**: This solution has been merged into `mcamara/laravel-localization` since version `1.3.11`. 
+This package is no longer required!
+
+
+
 A cobbled together fix to allow caching routes per locale for [mcamara's laravel localization](https://github.com/mcamara/laravel-localization). 
 
 See the [github issue related to this fix](https://github.com/mcamara/laravel-localization/issues/201) in the original package.
