@@ -14,9 +14,11 @@ class LaravelLocalizationServiceProvider extends ServiceProvider
         // Overwrite binding for laravellocalization to make translation-based cache possible.
         // This is not done in register() to avoid problems with the order in which service
         // providers are processed.
-        $this->app->singleton('laravellocalization', function () {
+        $this->app->singleton(\Mcamara\LaravelLocalization\LaravelLocalization::class, function () {
             return new LaravelLocalization();
         });
+        
+        $this->app->alias(\Mcamara\LaravelLocalization\LaravelLocalization::class, 'laravellocalization');
     }
 
     /**
