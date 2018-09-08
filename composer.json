@@ -47,5 +47,6 @@
                 "Czim\\LaravelLocalizationRouteCache\\LaravelLocalizationServiceProvider"
             ]
         }
-    }
+    },
+    "abandoned": true
 }
